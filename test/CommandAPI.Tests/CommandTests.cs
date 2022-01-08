@@ -4,28 +4,58 @@ using CommandAPI.Models;
 
 namespace CommandAPI.Tests
 {
-    public class CommandTests
+    public class CommandTests: IDisposable
     {
+        Command testCommand;
+        public CommandTests()
+        {
+            testCommand = new Command
+            {
+                HowTo = "Do something",
+                Platform = "Some Platform",
+                CommandLine = "Some Comman dLine"
+            };
+        }
+
+        public void Dispose()
+        {
+            testCommand = null;
+        }
+
         [Fact]
         public void ChangeHowTo()
         {
             // Arrange
-            var testCommand = new Command
-            {
-                HowTo = "Do something Wild!!!",
-                Platform = "xUnit",
-                CommandLine = "dotnet test",
-            };
 
             // Act
             testCommand.HowTo = "Execute Unit Tests";
-            testCommand.Platform = "MsTest";
-            testCommand.CommandLine = "mstest test";
 
             // Assert
             Assert.Equal("Execute Unit Tests", testCommand.HowTo);
-            Assert.Equal("MsTest", testCommand.Platform);
-            Assert.Equal("mstest tests", testCommand.CommandLine);
+
+        }
+        [Fact]
+        public void canChangePlatform()
+        {
+            // Arrange
+
+            // Act
+            testCommand.Platform = "xUnit";
+
+            // Assert
+            Assert.Equal("xUnit", testCommand.Platform);
+
+        }
+        [Fact]
+        public void canChangeCommandLine()
+        {
+            // Arrange
+
+            // Act
+            testCommand.CommandLine = "dotnet test";
+
+            // Assert
+            Assert.Equal("dotnet test", testCommand.CommandLine);
 
         }
     }
